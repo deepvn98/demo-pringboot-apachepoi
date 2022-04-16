@@ -26,12 +26,7 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAllUser(),HttpStatus.OK);
     }
 @GetMapping("/user/export")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
-//        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachement; filename=users.xlsx";
-        response.setHeader(headerKey,headerValue);
-
+    public void exportToExcel(HttpServletResponse response){
         List<User>listUsers = userRepository.findAllUser();
         UserExcelExporter userExcelExporter = new UserExcelExporter(listUsers);
         userExcelExporter.export(response,listUsers);

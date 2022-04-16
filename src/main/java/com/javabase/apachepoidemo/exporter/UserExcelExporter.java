@@ -9,6 +9,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class UserExcelExporter {
@@ -54,6 +57,12 @@ public class UserExcelExporter {
     }
 
     public void export(HttpServletResponse response, List<User> listUsers) {
+        DateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormat.format(new Date());
+        String fileName = "user "+currentDateTime+".xlsx";
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename="+fileName;
+        response.setHeader(headerKey,headerValue);
         writeHeaderRow();
         writeDataRow(listUsers);
         ServletOutputStream outputStream = null;
