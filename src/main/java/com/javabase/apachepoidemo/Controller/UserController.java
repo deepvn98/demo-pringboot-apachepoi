@@ -21,15 +21,16 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/getall/user")
-    public ResponseEntity<?> getAllUser(){
+    public ResponseEntity<?> getAllUser() {
 
-        return new ResponseEntity<>(userRepository.findAllUser(),HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findAllUser(), HttpStatus.OK);
     }
-@GetMapping("/user/export")
-    public void exportToExcel(HttpServletResponse response){
-        List<User>listUsers = userRepository.findAllUser();
+
+    @GetMapping("/user/export")
+    public void exportToExcel(HttpServletResponse response) {
+        List<User> listUsers = userRepository.findAllUser();
         UserExcelExporter userExcelExporter = new UserExcelExporter(listUsers);
-        userExcelExporter.export(response,listUsers);
+        userExcelExporter.export(response, listUsers);
     }
 
 }
