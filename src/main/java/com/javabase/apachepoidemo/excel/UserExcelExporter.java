@@ -1,4 +1,4 @@
-package com.javabase.apachepoidemo.exporter;
+package com.javabase.apachepoidemo.excel;
 
 import com.javabase.apachepoidemo.model.User;
 import org.apache.poi.ss.usermodel.*;

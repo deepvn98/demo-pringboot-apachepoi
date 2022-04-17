@@ -1,6 +1,7 @@
 package com.javabase.apachepoidemo.Controller;
 
-import com.javabase.apachepoidemo.exporter.UserExcelExporter;
+import com.javabase.apachepoidemo.excel.UserExcelExporter;
+import com.javabase.apachepoidemo.excel.UserExcelImporter;
 import com.javabase.apachepoidemo.model.User;
 import com.javabase.apachepoidemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,6 +31,16 @@ public class UserController {
         List<User> listUsers = userRepository.findAllUser();
         UserExcelExporter userExcelExporter = new UserExcelExporter(listUsers);
         userExcelExporter.export(response, listUsers);
+    }
+
+    @GetMapping("/user/import")
+    public String importToExcel() {
+        String filepath = "C:\\Users\\admin\\Downloads\\user 2022-04-17_00_38_42.xlsx";
+        UserExcelImporter userExcelImporter = new UserExcelImporter();
+//        userExcelImporter.excelImport(filepath);
+        List<User> listUsers = userExcelImporter.excelImport(filepath);
+        userRepository.saveAll(listUsers);
+        return "import Successfully!";
     }
 
 }
